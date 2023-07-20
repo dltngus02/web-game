@@ -1,0 +1,78 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>구구단</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script
+      crossorigin
+      src="https://unpkg.com/react@16/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"
+    ></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <script type="text/babel">
+      "use strict";
+      const GuGuDan = () => {
+        const [FirstNumber, setFirstNumber] = React.useState(
+          Math.floor(Math.random() * 10)
+        );
+        const input = React.useRef(null);
+
+        const [SecondNumber, setSecondNumber] = React.useState(
+          Math.floor(Math.random() * 10)
+        );
+        const [value, setValue] = React.useState(0);
+        const [result, setResult] = React.useState("");
+        const handleChange = (event) => {
+          setValue(event.target.value);
+        };
+
+        const handleTrue = (prevState) => {
+          return (
+            setResult(prevState + "정답입니다"),
+            setFirstNumber(Math.floor(Math.random() * 10)),
+            setSecondNumber(Math.floor(Math.random() * 10))
+          );
+        };
+
+        return (
+          <React.Fragment>
+            <div>
+              {FirstNumber}곱하기{SecondNumber}은?
+            </div>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                FirstNumber * SecondNumber === Number(value)
+                  ? handleTrue(value)
+                  : setResult("땡");
+                setValue("");
+                this.input.foucs();
+                console.log(FirstNumber * SecondNumber);
+              }}
+            >
+              <input
+                ref={input}
+                value={value}
+                type="number"
+                onChange={(e) => {
+                  handleChange(e);
+                }}
+              ></input>
+              <button>입력</button>
+            </form>
+            <div>{result}</div>
+          </React.Fragment>
+        );
+      };
+    </script>
+    <script type="text/babel">
+      ReactDOM.render(<GuGuDan />, document.querySelector("#root"));
+    </script>
+  </body>
+</html>
